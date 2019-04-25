@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!--JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="bootstable.min.js"></script>
+</head>
+
+<body>
+
+    <h2>Show Data</h2>
+    <div id="app">
+        <table class="table" id="makeEditable">
+            <tbody>
+                <thead>
+                    <tr class="info">
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price <span style="float:right"><button id="but_add">Add New Row</button></span></th>
+                    </tr>
+                </thead>
+            <tbody>
+                <tr :class="[fruit.Id%2 ? 'warning' : 'active']"  v-for="fruit in fruits">
+                    <td>{{fruit.Id}}</td>
+                    <td>{{fruit.Name}}</td>
+                    <td>{{fruit.Price}}</td>
+                </tr>
+            </tbody>
+        </table>
+        </tbody>
+        </table>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        $('#makeEditable').SetEditable({ $addButton: $('#but_add') });
+    </script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                fruits: []
+            },
+            created() {
+                var sa = this
+                axios.get('http://localhost:8001/api/fruit')
+                    .then(function (response) {
+                        sa.fruits = response.data.response;
+                    })
+            }
+        })
+
+    </script>
+    <script>
+        $('#makeEditable').SetEditable({ $addButton: $('#but_add') });
+    </script>
+</body>
+
+</html>
